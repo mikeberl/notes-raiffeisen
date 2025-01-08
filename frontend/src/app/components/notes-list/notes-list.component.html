@@ -1,0 +1,30 @@
+<!-- demo-list.component.html -->
+<div class="container mt-4">
+    <div class="accordion" id="notesAccordion">
+      <!-- ngFor per visualizzare ogni demo -->
+      <div *ngFor="let note of notes" class="accordion-item">
+        <h2 class="accordion-header" id="heading{{note.id}}">
+          <button class="accordion-button" type="button" 
+                  data-bs-toggle="collapse" 
+                  data-bs-target="#collapse{{note.id}}" 
+                  aria-expanded="true" 
+                  aria-controls="collapse{{note.id}}">
+            {{ note.title }}
+          </button>
+        </h2>
+        <div id="collapse{{note.id}}" class="accordion-collapse collapse" 
+             aria-labelledby="heading{{note.id}}" 
+             data-bs-parent="#notesAccordion">
+          <div class="accordion-body">
+            <!-- Descrizione del demo -->
+            <p>{{ note.text }}</p>
+  
+            <!-- Bottoni per modificare e cancellare -->
+            <button class="btn btn-warning me-2" (click)="editDemo(note.id)">Modifica</button>
+            <button class="btn btn-danger" (click)="deleteDemo(note.id)">Elimina</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  

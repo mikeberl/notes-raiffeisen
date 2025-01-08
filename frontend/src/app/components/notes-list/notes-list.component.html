@@ -21,23 +21,26 @@
                   type="button" 
                   data-bs-toggle="collapse" 
                   [attr.data-bs-target]="'#collapse' + note.id" 
-                  aria-expanded="true" 
-                  [attr.aria-controls]="'collapse' + note.id">
+                  [attr.aria-expanded]="!collapsedNotes[note.id]" 
+                  [attr.aria-controls]="'collapse' + note.id"
+                  [ngClass]="{ 'collapsed': collapsedNotes[note.id] }"
+                  (click)="toggleAccordion(note.id)">
             {{ note.title }}
           </button>
         </h2>
         <div [id]="'collapse' + note.id" 
              class="accordion-collapse collapse" 
+             [ngClass]="{ 'show': !collapsedNotes[note.id] }"
              [attr.aria-labelledby]="'heading' + note.id" 
              data-bs-parent="#notesAccordion">
           <div class="accordion-body">
             <p>{{ note.text }}</p>
-    
+  
             <button class="btn btn-warning me-2" (click)="editNote(note.id)">Modify</button>
             <button class="btn btn-danger" (click)="deleteNote(note.id)">Delete</button>
           </div>
         </div>
       </div>
     </div>
-  </div>
+</div>
   

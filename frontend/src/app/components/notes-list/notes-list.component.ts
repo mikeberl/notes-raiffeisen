@@ -1,6 +1,10 @@
 import { AfterViewInit, Component, OnInit } from '@angular/core';
-import { Note } from '../../models/note.model';
+import { Note, NoteCreate } from '../../models/note.model';
 import { NoteService } from '../../services/note.service';
+import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { ToastrService } from 'ngx-toastr';
+import Toast from 'bootstrap/js/dist/toast';
+// import bootstrap from 'bootstrap';
 
 @Component({
   selector: 'app-notes-list',
@@ -16,7 +20,11 @@ export class NotesListComponent implements OnInit {
 
   collapsedNotes: { [key: number]: boolean } = {};
 
-  constructor(private noteService: NoteService) {}
+  newNote: NoteCreate = { title: '', text: '' };
+
+  constructor(private noteService: NoteService, 
+              private modalService: NgbModal,
+              private toastr: ToastrService) {}
 
   ngOnInit(): void {
     this.loadNotes();  
@@ -46,8 +54,38 @@ export class NotesListComponent implements OnInit {
   }
 
   createNote(): void {
-    console.log('TODO CREATE NOTE');
+    this.noteService.createNote(this.newNote).subscribe(
+      (response) => {
+        this.showToast('Note created successfully!', true);
+        this.loadNotes(); 
+        this.newNote = { title: '', text: '' };
+        this.modalService.dismissAll();
+      },
+      (error) => {
+        this.showToast('Error creating note. Please try again.', false);
+      }
+    );
   }
+
+  showToast(message: string, success: boolean): void {
+    const toastElement = document.getElementById('liveToast');
+    const toastBody = toastElement?.querySelector('.toast-body');
+    
+    if (toastBody) {
+      toastBody.textContent = message;
+    }
+    if (success) {
+      toastElement?.classList.remove('bg-danger');
+      toastElement?.classList.add('bg-success', 'text-white');
+    }
+    else {
+      toastElement?.classList.remove('bg-success');
+      toastElement?.classList.add('bg-danger', 'text-white');
+    }    
+    const toast = new Toast(toastElement!);
+    toast.show();
+  }
+  
 
   filterNotes(): void {
     this.filteredNotes = this.notes.filter((note) =>

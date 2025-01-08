@@ -8,7 +8,7 @@ import { NotesListComponent } from './components/notes-list/notes-list.component
 import { NoteService } from './services/note.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
-import { routes } from './app.routes';
+import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
 
 
 @NgModule({
@@ -22,6 +22,7 @@ import { routes } from './app.routes';
     RouterOutlet,
     BrowserAnimationsModule,
     FormsModule,
+    NgbModalModule,
     
     RouterModule.forRoot([]),
 ],

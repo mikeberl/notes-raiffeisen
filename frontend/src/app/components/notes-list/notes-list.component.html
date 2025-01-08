@@ -7,8 +7,35 @@
         [(ngModel)]="searchTitle" 
         (input)="filterNotes()" 
       />
-      <button class="btn btn-primary" (click)="createNote()">New Note</button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">New Note</button>
     </div>
+
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+        <div class="modal-content">
+            <div class="modal-header">
+            <h1 class="modal-title fs-5" id="exampleModalLabel">Insert the new note</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body">
+                <div class="mb-3">
+                <label for="noteTitle" class="form-label">Title</label>
+                <input type="text" class="form-control" id="noteTitle" [(ngModel)]="newNote.title" placeholder="Enter title">
+            </div>
+            <div class="mb-3">
+                <label for="noteText" class="form-label">Text</label>
+                <textarea class="form-control" id="noteText" [(ngModel)]="newNote.text" placeholder="Enter text" rows="3"></textarea>
+            </div>
+            </div>
+            <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="btn btn-primary" (click)="createNote()">Save</button>
+            </div>
+        </div>
+        </div>
+    </div>
+  
   
     <div *ngIf="filteredNotes.length === 0" class="text-center mt-4">
       <p>No Notes saved at the moment. Please create a new one.</p>
@@ -42,5 +69,17 @@
         </div>
       </div>
     </div>
+
+    <!-- Toast container -->
+    <div class="toast-container position-fixed bottom-0 end-0 p-3">
+        <div id="liveToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+        <div class="toast-body" style="text-align: center;">
+            <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+        </div>
+        </div>
+    </div>
+  
+
+    
 </div>
   

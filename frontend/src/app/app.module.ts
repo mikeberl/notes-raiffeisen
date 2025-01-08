@@ -21,8 +21,7 @@ import { routes } from './app.routes';
     RouterOutlet,
     BrowserAnimationsModule,
     
-    RouterModule.forRoot([]
-    ),
+    RouterModule.forRoot([]),
 ],
   exports: [
     RouterModule

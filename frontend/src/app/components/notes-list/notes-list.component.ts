@@ -13,27 +13,25 @@ export class NotesListComponent implements OnInit {
   constructor(private noteService: NoteService) {}
 
   ngOnInit(): void {
-    this.loadDemos();
+    this.loadNotes();
   }
 
-  loadDemos(): void {
+  loadNotes(): void {
     this.noteService.getAllNotes().subscribe((notes) => {
       this.notes = notes;
     });
   }
 
-  deleteDemo(id: number): void {
-    if (confirm('Sei sicuro di voler eliminare questo demo?')) {
+  deleteNote(id: number): void {
+    if (confirm('Are you sure?')) {
       this.noteService.deleteNote(id).subscribe(() => {
-        this.loadDemos(); // Ricarica la lista dei demo
+        this.loadNotes();
       });
     }
   }
 
-  // Qui puoi aggiungere la logica per la modifica (ad esempio aprire un modulo di modifica)
-  editDemo(id: number): void {
-    // Logica per la modifica del demo
-    console.log('Modifica demo con id', id);
+  editNote(id: number): void {
+    console.log('TODO EDIT : ', id);
   }
 
 }

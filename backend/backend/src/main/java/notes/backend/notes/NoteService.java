@@ -31,7 +31,7 @@ public class NoteService {
         }).orElseThrow(() -> new RuntimeException("Notizia con id: " + note.getId() + " non trovata"));
     }
 
-    public void deleteNote(Note note) {
-        noteRepository.delete(note);
+    public void deleteNote(Long id) {
+        noteRepository.deleteById(id.toString());
     }
 }

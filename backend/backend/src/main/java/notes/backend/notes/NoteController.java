@@ -38,9 +38,9 @@ public class NoteController {
         }
     }
 
-    @DeleteMapping
-    public ResponseEntity<Note> deleteNote(@RequestBody Note note) {
-        noteService.deleteNote(note);
-        return ResponseEntity.ok().body(note);
+    @DeleteMapping("{id}")
+    public ResponseEntity<Note> deleteNote(@PathVariable Long id) {
+        noteService.deleteNote(id);
+        return ResponseEntity.noContent().build();
     }
 }

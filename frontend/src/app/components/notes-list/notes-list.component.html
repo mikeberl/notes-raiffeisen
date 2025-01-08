@@ -1,6 +1,21 @@
 <div class="container mt-4">
-    <div class="accordion" id="notesAccordion">
-      <div *ngFor="let note of notes" class="accordion-item">
+    <div class="d-flex justify-content-between align-items-center mb-3">
+      <input 
+        type="text" 
+        class="form-control w-50" 
+        placeholder="Search notes by title..." 
+        [(ngModel)]="searchTitle" 
+        (input)="filterNotes()" 
+      />
+      <button class="btn btn-primary" (click)="createNote()">New Note</button>
+    </div>
+  
+    <div *ngIf="filteredNotes.length === 0" class="text-center mt-4">
+      <p>No Notes saved at the moment. Please create a new one.</p>
+    </div>
+  
+    <div class="accordion" id="notesAccordion" *ngIf="filteredNotes.length > 0">
+      <div *ngFor="let note of filteredNotes" class="accordion-item">
         <h2 class="accordion-header" id="heading{{note.id}}">
           <button class="accordion-button" 
                   type="button" 
@@ -17,9 +32,9 @@
              data-bs-parent="#notesAccordion">
           <div class="accordion-body">
             <p>{{ note.text }}</p>
-  
-            <button class="btn btn-warning me-2" (click)="editNote(note.id)">Modifica</button>
-            <button class="btn btn-danger" (click)="deleteNote(note.id)">Elimina</button>
+    
+            <button class="btn btn-warning me-2" (click)="editNote(note.id)">Modify</button>
+            <button class="btn btn-danger" (click)="deleteNote(note.id)">Delete</button>
           </div>
         </div>
       </div>

@@ -8,7 +8,10 @@ import { NoteService } from '../../services/note.service';
   styleUrl: './notes-list.component.scss'
 })
 export class NotesListComponent implements OnInit {
+
   notes: Note[] = [];
+  filteredNotes: Note[] = [];
+  searchTitle: string = '';
 
   constructor(private noteService: NoteService) {}
 
@@ -19,11 +22,12 @@ export class NotesListComponent implements OnInit {
   loadNotes(): void {
     this.noteService.getAllNotes().subscribe((notes) => {
       this.notes = notes;
+      this.filteredNotes = notes;
     });
   }
 
   deleteNote(id: number): void {
-    if (confirm('Are you sure?')) {
+    if (confirm('Are you sure you want to delete this note?')) {
       this.noteService.deleteNote(id).subscribe(() => {
         this.loadNotes();
       });
@@ -34,4 +38,13 @@ export class NotesListComponent implements OnInit {
     console.log('TODO EDIT : ', id);
   }
 
+  createNote(): void {
+    console.log('TODO CREATE NOTE');
+  }
+
+  filterNotes(): void {
+    this.filteredNotes = this.notes.filter((note) =>
+      note.title.toLowerCase().includes(this.searchTitle.toLowerCase())
+    );
+  }
 }

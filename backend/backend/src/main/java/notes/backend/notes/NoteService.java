@@ -1,37 +1,47 @@
 package notes.backend.notes;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
-@Component
+@Service
 public class NoteService {
 
     private final NoteRepository noteRepository;
 
     @Autowired
-    public NoteService(final NoteRepository noteRepository) {
+    public NoteService(NoteRepository noteRepository) {
         this.noteRepository = noteRepository;
     }
 
-    public List<Note> getAllNotes() {
-        return noteRepository.findAll();
+    public List<NoteDTO> getAllNotes() {
+        return noteRepository.findAll().stream()
+                .map(NoteMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public Note saveNote(Note note) {
-        return noteRepository.save(note);
+    public NoteDTO saveNote(NoteDTO noteDTO) {
+        Note note = NoteMapper.toEntity(noteDTO);
+        Note savedNote = noteRepository.save(note);
+        return NoteMapper.toDTO(savedNote);
     }
 
-    public Note updateNote(Note note) {
-        return noteRepository.findById(String.valueOf(note.getId())).map(demo -> {
-            demo.setTitle(note.getTitle());
-            demo.setText(note.getText());
-            return noteRepository.save(demo);
-        }).orElseThrow(() -> new RuntimeException("Notizia con id: " + note.getId() + " non trovata"));
+    public NoteDTO updateNote(NoteDTO noteDTO) {
+        if (!noteRepository.existsById(String.valueOf(noteDTO.getId()))) {
+            throw new RuntimeException("Nota non trovata");
+        }
+        Note note = NoteMapper.toEntity(noteDTO);
+        Note updatedNote = noteRepository.save(note);
+        return NoteMapper.toDTO(updatedNote);
     }
 
     public void deleteNote(Long id) {
-        noteRepository.deleteById(id.toString());
+        noteRepository.deleteById(String.valueOf(id));
+    }
+
+    public boolean existsById(Long id) {
+        return noteRepository.existsById(String.valueOf(id));
     }
 }

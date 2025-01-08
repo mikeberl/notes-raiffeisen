@@ -1,5 +1,6 @@
 package notes.backend.notes;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -18,29 +19,33 @@ public class NoteController {
     }
 
     @GetMapping
-    public List<Note> getAllNotes() {
+    public List<NoteDTO> getAllNotes() {
         return noteService.getAllNotes();
     }
 
     @PostMapping
-    public ResponseEntity<Note> createNote(@RequestBody Note note) {
-        Note savedNote = noteService.saveNote(note);
+    public ResponseEntity<NoteDTO> createNote(@Valid @RequestBody NoteDTO noteDTO) {
+        NoteDTO savedNote = noteService.saveNote(noteDTO);
         return ResponseEntity.ok().body(savedNote);
     }
 
     @PutMapping
-    public ResponseEntity<Note> updateNote(@RequestBody Note note) {
+    public ResponseEntity<NoteDTO> updateNote(@Valid @RequestBody NoteDTO noteDTO) {
         try {
-            noteService.updateNote(note);
-            return ResponseEntity.ok().body(note);
+            NoteDTO updatedNote = noteService.updateNote(noteDTO);
+            return ResponseEntity.ok().body(updatedNote);
         } catch (RuntimeException e) {
             return ResponseEntity.notFound().build();
         }
     }
 
     @DeleteMapping("{id}")
-    public ResponseEntity<Note> deleteNote(@PathVariable Long id) {
-        noteService.deleteNote(id);
-        return ResponseEntity.noContent().build();
+    public ResponseEntity<Void> deleteNote(@PathVariable Long id) {
+        if (noteService.existsById(id)) {
+            noteService.deleteNote(id);
+            return ResponseEntity.noContent().build();
+        } else {
+            return ResponseEntity.notFound().build();
+        }
     }
 }

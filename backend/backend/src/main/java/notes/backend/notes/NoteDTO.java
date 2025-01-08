@@ -1,19 +1,19 @@
 package notes.backend.notes;
 
-import jakarta.persistence.*;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
+public class NoteDTO {
 
-@Entity
-@Table(name = "notes")
-public class Note {
-    @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @NotBlank(message = "Title cannot be empty")
     private String title;
+
+    @NotNull(message = "Text cannot be null")
     private String text;
 
-    public Note() {}
+    public NoteDTO() {}
 
     public Long getId() { return id; }
     public void setId(Long id) { this.id = id; }
@@ -31,5 +31,7 @@ public class Note {
     public void setText(String text) {
         this.text = text;
     }
+
+
 }
 

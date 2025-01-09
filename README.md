@@ -7,10 +7,12 @@ This is a webapp to create, view, and manage notes. The backend is built with **
 ## Running the App
 
 1. **Clone the repository**:  
+  Clone the repository with:
    ```bash
    git clone <repository-url>
    ```
-   Then run
+
+  Then run:
   ```bash
    docker-compose up --build
   ```

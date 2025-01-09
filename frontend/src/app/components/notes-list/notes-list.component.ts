@@ -61,7 +61,7 @@ export class NotesListComponent implements OnInit {
         this.showToast('Note created successfully!', true);
         this.loadNotes();
         this.newNote = { title: '', text: '' };
-        const modalElement = document.getElementById('exampleModal');
+        const modalElement = document.getElementById('createNoteModal');
         const modalInstance = Modal.getInstance(modalElement!);
         modalInstance?.hide();
       },

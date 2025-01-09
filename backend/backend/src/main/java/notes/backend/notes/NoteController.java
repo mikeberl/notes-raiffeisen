@@ -23,6 +23,16 @@ public class NoteController {
         return noteService.getAllNotes();
     }
 
+    @GetMapping("{id}")
+    public ResponseEntity<NoteDTO> getNoteById(@PathVariable Long id) {
+        try {
+            NoteDTO noteDTO = noteService.getNoteById(id);
+            return ResponseEntity.ok(noteDTO);
+        } catch (RuntimeException e) {
+            return ResponseEntity.notFound().build();
+        }
+    }
+
     @PostMapping
     public ResponseEntity<NoteDTO> createNote(@Valid @RequestBody NoteDTO noteDTO) {
         NoteDTO savedNote = noteService.saveNote(noteDTO);

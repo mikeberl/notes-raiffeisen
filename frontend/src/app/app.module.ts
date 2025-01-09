@@ -9,12 +9,15 @@ import { NoteService } from './services/note.service';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule } from '@angular/forms';
 import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
+import { AppRoutingModule } from './app.routes';
+import { EditNoteComponent } from './components/edit-note/edit-note.component';
 
 
 @NgModule({
   declarations: [
     AppComponent,
-    NotesListComponent
+    NotesListComponent,
+    EditNoteComponent
   ],
   imports: [
     BrowserModule,
@@ -23,8 +26,8 @@ import { NgbModalModule } from '@ng-bootstrap/ng-bootstrap';
     BrowserAnimationsModule,
     FormsModule,
     NgbModalModule,
-    
     RouterModule.forRoot([]),
+    AppRoutingModule
 ],
   exports: [
     RouterModule

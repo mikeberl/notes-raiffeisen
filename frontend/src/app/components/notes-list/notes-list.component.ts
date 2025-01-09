@@ -2,8 +2,8 @@ import { AfterViewInit, Component, OnInit } from '@angular/core';
 import { Note, NoteCreate } from '../../models/note.model';
 import { NoteService } from '../../services/note.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
-import { ToastrService } from 'ngx-toastr';
 import Toast from 'bootstrap/js/dist/toast';
+import { Router } from '@angular/router';
 // import bootstrap from 'bootstrap';
 
 @Component({
@@ -22,12 +22,12 @@ export class NotesListComponent implements OnInit {
 
   newNote: NoteCreate = { title: '', text: '' };
 
-  constructor(private noteService: NoteService, 
-              private modalService: NgbModal,
-              private toastr: ToastrService) {}
+  constructor(private noteService: NoteService,
+              private router: Router,
+              private modalService: NgbModal) {}
 
   ngOnInit(): void {
-    this.loadNotes();  
+    this.loadNotes();
   }
 
   loadNotes(): void {
@@ -53,11 +53,17 @@ export class NotesListComponent implements OnInit {
     console.log('TODO EDIT : ', id);
   }
 
+  goToEdit(note: Note): void {
+    this.router.navigate(['/edit', note.id]);
+  }
+
+
+
   createNote(): void {
     this.noteService.createNote(this.newNote).subscribe(
       (response) => {
         this.showToast('Note created successfully!', true);
-        this.loadNotes(); 
+        this.loadNotes();
         this.newNote = { title: '', text: '' };
         this.modalService.dismissAll();
       },
@@ -70,7 +76,7 @@ export class NotesListComponent implements OnInit {
   showToast(message: string, success: boolean): void {
     const toastElement = document.getElementById('liveToast');
     const toastBody = toastElement?.querySelector('.toast-body');
-    
+
     if (toastBody) {
       toastBody.textContent = message;
     }
@@ -81,11 +87,11 @@ export class NotesListComponent implements OnInit {
     else {
       toastElement?.classList.remove('bg-success');
       toastElement?.classList.add('bg-danger', 'text-white');
-    }    
+    }
     const toast = new Toast(toastElement!);
     toast.show();
   }
-  
+
 
   filterNotes(): void {
     this.filteredNotes = this.notes.filter((note) =>

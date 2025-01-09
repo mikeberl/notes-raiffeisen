@@ -16,12 +16,16 @@ export class NoteService {
         return this.http.get<Note[]>(this.apiUrl);
     }
 
-    createNote(demo: NoteCreate): Observable<Note> {
-        return this.http.post<Note>(this.apiUrl, demo);
+    getNoteById(id: number): Observable<Note> {
+      return this.http.get<Note>(`${this.apiUrl}/${id}`);
     }
 
-    updateNote(id: number, demo: Note): Observable<Note> {
-        return this.http.put<Note>(`${this.apiUrl}/${id}`, demo);
+    createNote(note: NoteCreate): Observable<Note> {
+        return this.http.post<Note>(this.apiUrl, note);
+    }
+
+    updateNote(id: number, note: Note): Observable<Note> {
+        return this.http.put<Note>(this.apiUrl, note);
     }
 
     deleteNote(id: number): Observable<void> {

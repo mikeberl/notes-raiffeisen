@@ -1,0 +1,20 @@
+<div class="container mt-4">
+  <h2>Edit Note</h2>
+  <div class="mb-3">
+    <label for="noteTitle" class="form-label">Title</label>
+    <input type="text" class="form-control" id="noteTitle" [(ngModel)]="note.title" placeholder="Enter title">
+  </div>
+  <div class="mb-3">
+    <label for="noteText" class="form-label">Text</label>
+    <textarea class="form-control" id="noteText" [(ngModel)]="note.text" placeholder="Enter text" rows="3"></textarea>
+  </div>
+  <button
+    class="btn btn-primary"
+    (click)="onConfirmEdit()"
+    [disabled]="!hasChanges()"
+    data-bs-toggle="tooltip"
+    data-bs-placement="top"
+    [title]="!hasChanges() ? 'Change something to confirm' : ''"
+  >Confirm</button>
+  <button class="btn btn-secondary ms-2" (click)="onCancelEdit()">Cancel</button>
+</div>

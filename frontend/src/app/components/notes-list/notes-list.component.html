@@ -1,11 +1,11 @@
 <div class="container mt-4">
-    <div class="d-flex justify-content-between align-items-center mb-3">
-      <input 
-        type="text" 
-        class="form-control w-50" 
-        placeholder="Search notes by title..." 
-        [(ngModel)]="searchTitle" 
-        (input)="filterNotes()" 
+    <div class="d-flex justify-content-between align-items-center mb-5">
+      <input
+        type="text"
+        class="form-control w-50"
+        placeholder="Search notes by title..."
+        [(ngModel)]="searchTitle"
+        (input)="filterNotes()"
       />
       <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">New Note</button>
     </div>
@@ -35,35 +35,35 @@
         </div>
         </div>
     </div>
-  
-  
-    <div *ngIf="filteredNotes.length === 0" class="text-center mt-4">
+
+    <!-- Notes List -->
+    <div *ngIf="filteredNotes.length === 0" class="text-center mt-5 ">
       <p>No Notes saved at the moment. Please create a new one.</p>
     </div>
-  
     <div class="accordion" id="notesAccordion" *ngIf="filteredNotes.length > 0">
       <div *ngFor="let note of filteredNotes" class="accordion-item">
         <h2 class="accordion-header" id="heading{{note.id}}">
-          <button class="accordion-button" 
-                  type="button" 
-                  data-bs-toggle="collapse" 
-                  [attr.data-bs-target]="'#collapse' + note.id" 
-                  [attr.aria-expanded]="!collapsedNotes[note.id]" 
+          <button class="accordion-button"
+                  type="button"
+                  data-bs-toggle="collapse"
+                  [attr.data-bs-target]="'#collapse' + note.id"
+                  [attr.aria-expanded]="!collapsedNotes[note.id]"
                   [attr.aria-controls]="'collapse' + note.id"
                   [ngClass]="{ 'collapsed': collapsedNotes[note.id] }"
                   (click)="toggleAccordion(note.id)">
             {{ note.title }}
           </button>
         </h2>
-        <div [id]="'collapse' + note.id" 
-             class="accordion-collapse collapse" 
+        <div [id]="'collapse' + note.id"
+             class="accordion-collapse collapse"
              [ngClass]="{ 'show': !collapsedNotes[note.id] }"
-             [attr.aria-labelledby]="'heading' + note.id" 
+             [attr.aria-labelledby]="'heading' + note.id"
              data-bs-parent="#notesAccordion">
           <div class="accordion-body">
             <p>{{ note.text }}</p>
-  
-            <button class="btn btn-warning me-2" (click)="editNote(note.id)">Modify</button>
+
+            <button class="btn btn-warning me-2"
+                (click)="goToEdit(note)">Modify</button>
             <button class="btn btn-danger" (click)="deleteNote(note.id)">Delete</button>
           </div>
         </div>
@@ -78,8 +78,4 @@
         </div>
         </div>
     </div>
-  
-
-    
 </div>
-  

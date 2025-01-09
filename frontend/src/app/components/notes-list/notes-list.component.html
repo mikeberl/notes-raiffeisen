@@ -8,15 +8,15 @@
         [(ngModel)]="searchTitle"
         (input)="filterNotes()"
       />
-      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">New Note</button>
+      <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#createNoteModal">New Note</button>
     </div>
 
     <!-- Modal -->
-    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal fade" id="createNoteModal" tabindex="-1" aria-labelledby="createNoteModal" aria-hidden="true">
         <div class="modal-dialog">
         <div class="modal-content">
             <div class="modal-header">
-            <h1 class="modal-title fs-5" id="exampleModalLabel">Insert the new note</h1>
+            <h1 class="modal-title fs-5" id="createNoteModal">Insert the new note</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
             </div>
             <div class="modal-body">
@@ -31,7 +31,7 @@
             </div>
             <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary" (click)="createNote()">Save</button>
+            <button type="button" class="btn btn-primary" data-bs-dismiss="modal" (click)="createNote()">Save</button>
             </div>
         </div>
         </div>
@@ -39,7 +39,7 @@
 
     <!-- Notes List -->
     <div *ngIf="filteredNotes.length === 0" class="text-center mt-5 ">
-      <p>No Notes saved at the moment. Please create a new one.</p>
+      <p class="display-6 mt-5 pt-5">No Notes saved at the moment. Please create a new one.</p>
     </div>
     <div class="accordion" id="notesAccordion" *ngIf="filteredNotes.length > 0">
       <div *ngFor="let note of filteredNotes" class="accordion-item">

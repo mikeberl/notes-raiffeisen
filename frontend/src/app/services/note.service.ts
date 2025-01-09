@@ -8,7 +8,7 @@ import { Note, NoteCreate } from '../models/note.model';
 })
 export class NoteService {
 
-  private apiUrl = 'http://localhost:8080/api/v1/notes';
+  private apiUrl = 'http://backend:8080/api/v1/notes';
 
     constructor(private http: HttpClient) { }
 

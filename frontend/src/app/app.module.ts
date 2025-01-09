@@ -26,7 +26,6 @@ import { EditNoteComponent } from './components/edit-note/edit-note.component';
     BrowserAnimationsModule,
     FormsModule,
     NgbModalModule,
-    RouterModule.forRoot([]),
     AppRoutingModule
 ],
   exports: [

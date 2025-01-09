@@ -4,8 +4,8 @@ import { EditNoteComponent } from './components/edit-note/edit-note.component';
 import { NotesListComponent } from './components/notes-list/notes-list.component';
 
 const routes: Routes = [
-  { path: '', component: NotesListComponent }, // Componente principale con la lista delle note
-  { path: 'edit/:id', component: EditNoteComponent }  // Rotta per la modifica della nota
+  { path: '', component: NotesListComponent },
+  { path: 'edit/:id', component: EditNoteComponent }
 ];
 
 @NgModule({

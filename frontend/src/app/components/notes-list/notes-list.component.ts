@@ -4,6 +4,7 @@ import { NoteService } from '../../services/note.service';
 import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
 import Toast from 'bootstrap/js/dist/toast';
 import { Router } from '@angular/router';
+import {Modal} from 'bootstrap';
 // import bootstrap from 'bootstrap';
 
 @Component({
@@ -49,28 +50,25 @@ export class NotesListComponent implements OnInit {
     }
   }
 
-  editNote(id: number): void {
-    console.log('TODO EDIT : ', id);
-  }
 
   goToEdit(note: Note): void {
     this.router.navigate(['/edit', note.id]);
   }
 
-
-
   createNote(): void {
-    this.noteService.createNote(this.newNote).subscribe(
-      (response) => {
+    this.noteService.createNote(this.newNote).subscribe({
+      next: (note) => {
         this.showToast('Note created successfully!', true);
         this.loadNotes();
         this.newNote = { title: '', text: '' };
-        this.modalService.dismissAll();
+        const modalElement = document.getElementById('exampleModal');
+        const modalInstance = Modal.getInstance(modalElement!);
+        modalInstance?.hide();
       },
-      (error) => {
+      error: (error) => {
         this.showToast('Error creating note. Please try again.', false);
       }
-    );
+    });
   }
 
   showToast(message: string, success: boolean): void {
